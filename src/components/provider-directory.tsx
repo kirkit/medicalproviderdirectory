@@ -44,18 +44,22 @@ export default function ProviderDirectory() {
     const [providers, setProviders] = useState<Provider[]>([])
     const [selectedProviders, setSelectedProvider] = useState<Provider[]>([])
     const [isAddFormOpen, setIsAddFormOpen] = useState(false)
+    const [storageLoaded, setStorageLoaded] = useState(false)
 
     useEffect(()=>
     {
         setInitialProviders()
         setProviders(getProvidersFromStorage())
         setSelectedProvider(getProvidersFromStorage())
+        setStorageLoaded(true)
     }, [])
 
     useEffect(() => {
         // Save providers to localStorage
-        setProvidersInStorage(providers)
-    }, [providers]);
+        if(storageLoaded) {
+            setProvidersInStorage(providers)
+        }
+    }, [providers, storageLoaded]);
 
     useEffect(() =>
     {

@@ -1,7 +1,6 @@
-# React + TypeScript + Vite
 # Medical Provider Directory Application
-
-A web-based medical provider directory application built with Next.js, TypesScript, React, and Tailwind CSS
+### React + TypeScript + Vite
+A web-based medical provider directory application built with Vite, Next.js, TypesScript, React, and Tailwind CSS
 
 ## Features
 - View a list of providers with their details
@@ -10,7 +9,11 @@ A web-based medical provider directory application built with Next.js, TypesScri
 - Sort providers by any field (asc/desc)
 - Search contacts
 
+### Data Persistence
+Medical Provider Directory uses local storage to store and restore contacts between sessions.
+
 ## Technical Stack
+- Vite
 - Next.js
 - TypeScript
 - Tailwind CSS
