@@ -1,4 +1,3 @@
-//TODO: sort and delete providers
 "use client"
 
 import {useState, useEffect} from "react"
@@ -60,6 +59,17 @@ export default function ProviderDirectory() {
         setProviders(providers.filter(provider => provider.id !== id))
     }
 
+    const sortProviders = (field: keyof Provider, direction: "asc" | "desc")=>{
+        const sorted = [...providers].sort((a, b) => {
+            const valueA = a[field]|| ""
+            const valueB = b[field]|| ""
+
+            return direction === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA)
+        })
+
+        setSelectedProvider(sorted)
+    }
+
     return (
         <main>
             <h1>Provider Directory</h1>
@@ -72,6 +82,7 @@ export default function ProviderDirectory() {
             <ProviderTable
                 providers={selectedProviders}
                 onDelete={deleteProvider}
+                onSort={sortProviders}
             />
 
             <ProviderForm

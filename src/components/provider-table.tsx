@@ -1,29 +1,46 @@
-//The Table which will be used to display the providers, and also how to sort them by fields
-//TODO: sort and delete providers
 "use client"
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import type {Provider} from "@/types/provider"
 import {Button} from "@/components/ui/button.tsx";
 import {TrashIcon} from "lucide-react";
+import {useState} from "react";
 
 //Table will need to give the ability to sort and delete providers
 interface ProviderTableProps {
     providers: Provider[]
     onDelete: (id: string) => void
-    // onsort: () => void
+    onSort: (field: keyof Provider, direction: "asc" | "desc" ) => void
 }
 
-export function ProviderTable({providers, onDelete}: ProviderTableProps) {
+export function ProviderTable({providers, onDelete, onSort}: ProviderTableProps) {
+    const [sortField, setSortField] = useState<keyof Provider | null>(null)
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
+
+    const handleSort = (field: keyof Provider) => {
+        const newDirection = sortField === field ? sortDirection === "asc" ? "desc" : "asc" : "asc"
+        setSortField(field)
+        setSortDirection(newDirection)
+        onSort(field, sortDirection)
+    }
+
     return (
         <div className=" border rounded-md overflow-hidden shadow-md">
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Provider Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Specialty</TableHead>
-                        <TableHead>Practice Name</TableHead>
+                        <TableHead onClick={()=> handleSort("providerName")} className="cursor-pointer">
+                            <div>Provider Name</div>
+                        </TableHead>
+                        <TableHead onClick={()=> handleSort("email")} className="cursor-pointer">
+                            <div>Email</div>
+                        </TableHead>
+                        <TableHead onClick={()=> handleSort("specialty")} className="cursor-pointer">
+                            <div>Specialty</div>
+                        </TableHead>
+                        <TableHead onClick={()=> handleSort("practiceName")} className="cursor-pointer">
+                            <div>Practice Name</div>
+                        </TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
