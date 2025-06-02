@@ -16,9 +16,15 @@ export default function ProviderDirectory() {
 
     useEffect(()=>
     {
-        setProviders(initialProviders)
-        setSelectedProvider(initialProviders)
+        localStorage.setItem("providers", JSON.stringify(initialProviders))
+        setProviders((JSON.parse(localStorage.getItem("providers") || "[]") as Provider[]) || [])
+        setSelectedProvider((JSON.parse(localStorage.getItem("providers") || "[]") as Provider[]) || [])
     }, [])
+
+    useEffect(() => {
+        // Save providers to localStorage
+        localStorage.setItem("providers", JSON.stringify(providers))
+    }, [providers]);
 
     useEffect(() =>
     {
@@ -50,8 +56,7 @@ export default function ProviderDirectory() {
             ...newProvider
         }
 
-        providers.unshift(addProvider)
-        setProviders(providers)
+        setProviders([addProvider, ...providers])
         setIsAddFormOpen(false)
     }
 
