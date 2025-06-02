@@ -13,22 +13,38 @@ import {initialProviders} from "@/data/inital-providers"
 export default function ProviderDirectory() {
     const [searchQuery, setSearchQuery] = useState("")
     const [providers, setProviders] = useState<Provider[]>([])
+    const [selectedProviders, setSelectedProvider] = useState<Provider[]>([])
 
     useEffect(()=>
     {
+        //setting up for when we add new providers
         setProviders(initialProviders)
+        setSelectedProvider(initialProviders)
     }, [])
 
     useEffect(() =>
     {
         if(searchQuery.trim() === ""){
-            // Display all providers
+            setSelectedProvider(providers) //setting up for when we add new providers
         } else {
             // Filter providers by search term
-            // const searchTerm = query.trim().toLowerCase();
-            // need to set up table to display providers now
+            const searchTerm = searchQuery.toLowerCase();
+            const selected = providers.filter(
+                (provider) =>
+                    provider.providerName.toLowerCase().includes(searchTerm)||
+                    //First and last might be overkill to check on since provider name will contain both, but adding them for now
+                    provider.firstName.toLowerCase().includes(searchTerm)||
+                    provider.lastName.toLowerCase().includes(searchTerm)||
+                    provider.email.toLowerCase().includes(searchTerm) ||
+                    (provider.practiceName &&
+                        provider.practiceName.toLowerCase().includes(searchTerm)) ||
+                    (provider.specialty &&
+                        provider.specialty.toLowerCase().includes(searchTerm))
+            )
+
+            setSelectedProvider(selected)
         }
-    }, [searchQuery])
+    }, [searchQuery, providers])
 
     return (
         <main>
@@ -39,7 +55,7 @@ export default function ProviderDirectory() {
             </div>
 
             <ProviderTable
-                providers={providers}
+                providers={selectedProviders}
             />
         </main>
     )
