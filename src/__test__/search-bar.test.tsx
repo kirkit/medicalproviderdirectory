@@ -1,7 +1,9 @@
 import {SearchBar} from '@/components/search-bar';
 import {beforeEach, describe, it} from "node:test";
-import {jest} from "globals";
+import jest from 'jest-mock';
 import {render, screen, fireEvent} from "@testing-library/react";
+import {expect} from "@jest/globals";
+import '@testing-library/jest-dom/jest-globals'
 
 describe('SearchBar', () => {
     const mockOnChange = jest.fn()

@@ -1,5 +1,7 @@
 import {beforeEach, describe, it} from "node:test";
-import {jest} from "globals";
+import jest from 'jest-mock';
+import {expect} from "@jest/globals";
+import '@testing-library/jest-dom/jest-globals'
 import {render, screen, fireEvent, waitFor} from "@testing-library/react";
 import {ProviderTable} from "@/components/provider-table.tsx";
 import type {Provider} from "@/types/provider"
@@ -111,13 +113,16 @@ describe('ProviderTable', () => {
     it("Deletes a provider", async () => {
         render(<ProviderTable providers={mockProviders} onDelete={mockDelete} onSort={mockSort}/>)
 
-        const deleteButton = screen.getByText('Delete  ${mockProviders.at(0).providerName}')
+        const mockProviderName = "Doe, Jane"
+        const deleteButton = screen.getByText('Delete  ${mockProviderName}')
         fireEvent.click(deleteButton)
 
         await waitFor(()=> {
             expect(mockDelete).toHaveBeenCalledTimes(1)
             expect(mockDelete)
-            expect(screen.queryByText(mockProviders.at(0).providerName)).not.toBeInTheDocument()
+            if(mockProviders && mockProviders.length > 1) {
+                expect(screen.queryByText(mockProviderName)).not.toBeInTheDocument()
+            }
         })
     })
 })

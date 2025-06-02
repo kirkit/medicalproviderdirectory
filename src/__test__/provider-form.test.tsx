@@ -20,8 +20,10 @@
     //Need to test for sorting by email
 import {ProviderForm} from "@/components/provider-form.tsx";
 import {beforeEach, describe, it} from "node:test";
-import {jest} from "globals";
+import jest from 'jest-mock';
 import {render, screen, fireEvent, waitFor} from "@testing-library/react";
+import {expect} from "@jest/globals";
+import '@testing-library/jest-dom/jest-globals'
 
 describe('ProviderForm', () => {
     const mockAddProvider = jest.fn()
@@ -46,7 +48,7 @@ describe('ProviderForm', () => {
     })
 
     it("Checks for required fields", async () => {
-        reder(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
+        render(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
 
         const submitButton = screen.getByRole("button", {name: /Add Provider/i})
         fireEvent.click(submitButton)
@@ -61,7 +63,7 @@ describe('ProviderForm', () => {
     })
 
     it("validates correct email foramt", async () => {
-        reder(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
+        render(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
 
         const FirstNameInput = screen.getByLabelText(/First Name */i)
         const LastNameInput = screen.getByLabelText(/Last Name */i)
@@ -100,7 +102,7 @@ describe('ProviderForm', () => {
         await waitFor(()=> {
             expect(mockAddProvider).toHaveBeenCalledTimes(1)
             expect(mockAddProvider).toHaveBeenCalledWith(
-                expect.objectConaining({
+                expect.objectContaining({
                     firstName: "Jane",
                     lastName: "Doe",
                     email: "jdoe@test.com",
@@ -127,7 +129,7 @@ describe('ProviderForm', () => {
         await waitFor(()=> {
             expect(mockAddProvider).toHaveBeenCalledTimes(1)
             expect(mockAddProvider).toHaveBeenCalledWith(
-                expect.objectConaining({
+                expect.objectContaining({
                     firstName: "Jane",
                     lastName: "Doe",
                     email: "jdoe@test.com",
