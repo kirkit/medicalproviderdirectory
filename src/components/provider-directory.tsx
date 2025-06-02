@@ -8,6 +8,37 @@ import {initialProviders} from "@/data/inital-providers"
 import {ProviderForm} from "@/components/provider-form.tsx";
 import {Button} from "@/components/ui/button.tsx";
 
+function setInitialProviders() {
+    const key = "providers"
+    try {
+        const providers = JSON.parse(localStorage.getItem(key) || "[]") as Provider[]
+        if(providers.length === 0) {
+            localStorage.setItem(key, JSON.stringify(initialProviders))
+        }
+    } catch (error) {
+        console.error("Failed to get/set from local storage",error)
+    }
+}
+
+function getProvidersFromStorage() {
+    const key = "providers"
+    try {
+        return JSON.parse(localStorage.getItem(key) || "[]") as Provider[]
+    } catch (error) {
+        console.error("Failed to get from local storage",error)
+        return []
+    }
+}
+
+function setProvidersInStorage(providers: Provider[]) {
+    const key = "providers"
+    try {
+        localStorage.setItem(key, JSON.stringify(providers))
+    } catch (error) {
+        console.error("Failed to set in local storage",error)
+    }
+}
+
 export default function ProviderDirectory() {
     const [searchQuery, setSearchQuery] = useState("")
     const [providers, setProviders] = useState<Provider[]>([])
@@ -16,14 +47,14 @@ export default function ProviderDirectory() {
 
     useEffect(()=>
     {
-        localStorage.setItem("providers", JSON.stringify(initialProviders))
-        setProviders((JSON.parse(localStorage.getItem("providers") || "[]") as Provider[]) || [])
-        setSelectedProvider((JSON.parse(localStorage.getItem("providers") || "[]") as Provider[]) || [])
+        setInitialProviders()
+        setProviders(getProvidersFromStorage())
+        setSelectedProvider(getProvidersFromStorage())
     }, [])
 
     useEffect(() => {
         // Save providers to localStorage
-        localStorage.setItem("providers", JSON.stringify(providers))
+        setProvidersInStorage(providers)
     }, [providers]);
 
     useEffect(() =>
