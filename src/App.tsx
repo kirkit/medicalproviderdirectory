@@ -1,7 +1,8 @@
 import './App.css'
+import ProviderDirectory from "@/components/provider-directory.tsx";
 
 function App() {
-    return;
+    return ProviderDirectory();
 }
 
 export default App
