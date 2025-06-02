@@ -3,7 +3,7 @@
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import type {Provider} from "@/types/provider"
 import {Button} from "@/components/ui/button.tsx";
-import {TrashIcon} from "lucide-react";
+import {ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon, TrashIcon} from "lucide-react";
 import {useState} from "react";
 
 //Table will need to give the ability to sort and delete providers
@@ -18,10 +18,15 @@ export function ProviderTable({providers, onDelete, onSort}: ProviderTableProps)
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
 
     const handleSort = (field: keyof Provider) => {
-        const newDirection = sortField === field ? sortDirection === "asc" ? "desc" : "asc" : "asc"
+        const direction = sortField === field && sortDirection === "asc" ? "desc" : "asc"
         setSortField(field)
-        setSortDirection(newDirection)
-        onSort(field, sortDirection)
+        setSortDirection(direction)
+        onSort(field, direction)
+    }
+
+    const getSortIcon = (field: keyof Provider) => {
+        if(sortField !== field) return <ChevronsUpDownIcon className="w-4 h-4" />
+        return sortDirection === "asc" ? <ChevronUpIcon className="ml-2 h-4 w-4" /> : <ChevronDownIcon className="ml-2 h-4 w-4" />
     }
 
     return (
@@ -29,17 +34,29 @@ export function ProviderTable({providers, onDelete, onSort}: ProviderTableProps)
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead onClick={()=> handleSort("providerName")} className="cursor-pointer">
-                            <div>Provider Name</div>
+                        <TableHead onClick={()=> handleSort("providerName")} className="cursor-pointer w-auto justify-center gap-2 pl-2 pr-4">
+                            <div className="flex items-center">
+                                Provider Name
+                                {getSortIcon("providerName")}
+                            </div>
                         </TableHead>
                         <TableHead onClick={()=> handleSort("email")} className="cursor-pointer">
-                            <div>Email</div>
+                            <div className="flex items-center">
+                                Email
+                                {getSortIcon("email")}
+                            </div>
                         </TableHead>
                         <TableHead onClick={()=> handleSort("specialty")} className="cursor-pointer">
-                            <div>Specialty</div>
+                            <div className="flex items-center">
+                                Specialty
+                                {getSortIcon("specialty")}
+                            </div>
                         </TableHead>
                         <TableHead onClick={()=> handleSort("practiceName")} className="cursor-pointer">
-                            <div>Practice Name</div>
+                            <div className="flex items-center">
+                                Practice Name
+                                {getSortIcon("practiceName")}
+                            </div>
                         </TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
