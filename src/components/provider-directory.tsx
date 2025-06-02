@@ -30,7 +30,7 @@ export default function ProviderDirectory() {
             const selected = providers.filter(
                 (provider) =>
                     provider.providerName.toLowerCase().includes(searchTerm)||
-                    //First and last might be overkill to check on since provider name will contain both, but adding them for now
+                    //First and last might be overkill to check on since the provider name will contain both, but adding them for now
                     provider.firstName.toLowerCase().includes(searchTerm)||
                     provider.lastName.toLowerCase().includes(searchTerm)||
                     provider.email.toLowerCase().includes(searchTerm) ||
@@ -44,10 +44,10 @@ export default function ProviderDirectory() {
         }
     }, [searchQuery, providers])
 
-    const addContact = (newProvdider: Omit<Provider, "id">)=>{
+    const addContact = (newProvider: Omit<Provider, "id">)=>{
         const addProvider = {
             id: Date.now().toString(),
-            ...newProvdider
+            ...newProvider
         }
 
         providers.unshift(addProvider)
