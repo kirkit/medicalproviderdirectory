@@ -56,6 +56,10 @@ export default function ProviderDirectory() {
         setIsAddFormOpen(false)
     }
 
+    const deleteProvider = (id: string)=>{
+        setProviders(providers.filter(provider => provider.id !== id))
+    }
+
     return (
         <main>
             <h1>Provider Directory</h1>
@@ -67,6 +71,7 @@ export default function ProviderDirectory() {
 
             <ProviderTable
                 providers={selectedProviders}
+                onDelete={deleteProvider}
             />
 
             <ProviderForm
