@@ -1,18 +1,15 @@
-//Form for adding a new provider
-//Form will make it easier to check fields as required and add new providers
-//Have to decide how I want to display the form, should it be side by side or a pop-up?
-    //Leaning towards pop-up to keep main page cleaner and also make it easier for focus on on thing at a time
 "use client"
 
 
+import {useForm} from "react-hook-form";
+import type {Provider} from "@/types/provider"
 import {Dialog, DialogTitle, DialogContent, DialogFooter} from "@/components/ui/dialog.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form.tsx";
-import {useForm} from "react-hook-form";
+import {Input} from "@/components/ui/input.tsx";
+import {Button} from "@/components/ui/button.tsx";
 //Consulted vercel v0 for best way to implement the form with validation and zod was suggested
 import {z} from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {Input} from "@/components/ui/input.tsx";
-import {Button} from "@/components/ui/button.tsx";
 
 const FormSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -27,7 +24,7 @@ interface ProviderFormProps {
     //Going to do a pop-up so need to know when it is open and what to do when it is closes
     isOpen: boolean
     onClose: () => void
-    onSubmit: () => void
+    onSubmit: (provider: Omit<Provider, "id">) => void
 }
 
 export function ProviderForm({isOpen, onClose, onSubmit}: ProviderFormProps) {
@@ -42,39 +39,55 @@ export function ProviderForm({isOpen, onClose, onSubmit}: ProviderFormProps) {
             practiceName: ""
         }
     })
+
+    const handleSubmit = (values: FormValues) => {
+        const newProvider  = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            specialty: values.specialty,
+            practiceName: values.practiceName,
+            providerName: values.lastName + ", " + values.firstName,
+        }
+        onSubmit(newProvider)
+
+        form.reset()
+    }
+
     return (
         <Dialog open={isOpen} onOpenChange={(open)=> !open && onClose()}>
             <DialogContent>
                 <DialogTitle>Add New Provider</DialogTitle>
 
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <FormField
-                            control={form.control}
-                            name="firstName"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>First Name *</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="First Name..." {...field} />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
+                    <form onSubmit={form.handleSubmit(handleSubmit)}>
+                        <div className="grid grid-cols-2 gap-4">
+                            <FormField
+                                control={form.control}
+                                name="firstName"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>First Name *</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Jane" {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
 
-                        <FormField
-                            control={form.control}
-                            name="lastName"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>Last Name *</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Last Name..." {...field} />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-
+                            <FormField
+                                control={form.control}
+                                name="lastName"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Last Name *</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Doe" {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         <FormField
                             control={form.control}
                             name="email"
@@ -82,7 +95,7 @@ export function ProviderForm({isOpen, onClose, onSubmit}: ProviderFormProps) {
                                 <FormItem>
                                     <FormLabel>Email *</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="email@test.com" {...field} />
+                                        <Input placeholder="jdoe@ohiohealth.com" {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -108,7 +121,7 @@ export function ProviderForm({isOpen, onClose, onSubmit}: ProviderFormProps) {
                                 <FormItem>
                                     <FormLabel>Practice Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="COPCP" {...field} />
+                                        <Input placeholder="Riverside Hospital" {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}

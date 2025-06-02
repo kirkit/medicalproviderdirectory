@@ -1,6 +1,4 @@
-//Main directory for providers
-//will need to add a way to add providers
-    //going to need a form probably to make it easier to add and test
+//TODO: sort and delete providers
 "use client"
 
 import {useState, useEffect} from "react"
@@ -19,7 +17,6 @@ export default function ProviderDirectory() {
 
     useEffect(()=>
     {
-        //setting up for when we add new providers
         setProviders(initialProviders)
         setSelectedProvider(initialProviders)
     }, [])
@@ -27,7 +24,7 @@ export default function ProviderDirectory() {
     useEffect(() =>
     {
         if(searchQuery.trim() === ""){
-            setSelectedProvider(providers) //setting up for when we add new providers
+            setSelectedProvider(providers)
         } else {
             // Filter providers by search term
             const searchTerm = searchQuery.toLowerCase();
@@ -48,8 +45,15 @@ export default function ProviderDirectory() {
         }
     }, [searchQuery, providers])
 
-    const addContact = () =>{
+    const addContact = (newProvdider: Omit<Provider, "id">)=>{
+        const addProvider = {
+            id: Date.now().toString(),
+            ...newProvdider
+        }
 
+        providers.unshift(addProvider)
+        setProviders(providers)
+        setIsAddFormOpen(false)
     }
 
     return (

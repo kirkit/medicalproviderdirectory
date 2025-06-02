@@ -1,4 +1,5 @@
 //The Table which will be used to display the providers, and also how to sort them by fields
+//TODO: sort and delete providers
 "use client"
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
