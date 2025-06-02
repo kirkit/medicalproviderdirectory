@@ -1,5 +1,4 @@
 //Main directory for providers
-//Will need to add a table of providers
 //will need to add a way to add providers
     //going to need a form probably to make it easier to add and test
 "use client"
@@ -9,11 +8,14 @@ import {SearchBar} from "@/components/search-bar"
 import {ProviderTable} from "@/components/provider-table"
 import type {Provider} from "@/types/provider"
 import {initialProviders} from "@/data/inital-providers"
+import {ProviderForm} from "@/components/provider-form.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function ProviderDirectory() {
     const [searchQuery, setSearchQuery] = useState("")
     const [providers, setProviders] = useState<Provider[]>([])
     const [selectedProviders, setSelectedProvider] = useState<Provider[]>([])
+    const [isAddFormOpen, setIsAddFormOpen] = useState(false)
 
     useEffect(()=>
     {
@@ -57,6 +59,9 @@ export default function ProviderDirectory() {
             <ProviderTable
                 providers={selectedProviders}
             />
+
+            <Button onClick={()=> setIsAddFormOpen(true)}>Add Provider</Button>
+            <ProviderForm isOpen={isAddFormOpen} onClose={()=> setIsAddFormOpen(false)}/>
         </main>
     )
 }
