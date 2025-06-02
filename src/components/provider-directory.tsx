@@ -48,20 +48,28 @@ export default function ProviderDirectory() {
         }
     }, [searchQuery, providers])
 
+    const addContact = () =>{
+
+    }
+
     return (
         <main>
             <h1>Provider Directory</h1>
 
-            <div>
+            <div className="flex items-center gap-4 mb-4">
                 <SearchBar value={searchQuery} onChange={setSearchQuery}/>
+                <Button onClick={()=> setIsAddFormOpen(true)}>Add Provider</Button>
             </div>
 
             <ProviderTable
                 providers={selectedProviders}
             />
 
-            <Button onClick={()=> setIsAddFormOpen(true)}>Add Provider</Button>
-            <ProviderForm isOpen={isAddFormOpen} onClose={()=> setIsAddFormOpen(false)}/>
+            <ProviderForm
+                isOpen={isAddFormOpen}
+                onClose={()=> setIsAddFormOpen(false)}
+                onSubmit={addContact}
+            />
         </main>
     )
 }
