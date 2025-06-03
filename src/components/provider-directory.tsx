@@ -8,6 +8,10 @@ import {initialProviders} from "@/data/inital-providers"
 import {ProviderForm} from "@/components/provider-form.tsx";
 import {Button} from "@/components/ui/button.tsx";
 
+//Memory Management Helper Functions
+/**
+ * Sets up the local storage with the initial provider dataset if no data exists in local storage
+ */
 function setInitialProviders() {
     const key = "providers"
     try {
@@ -20,6 +24,10 @@ function setInitialProviders() {
     }
 }
 
+/**
+ * Returns the providers saved in local storage or if there was an issue accessing local storage or no values exist
+ * under the "provider" key returns an empty provider array
+ */
 function getProvidersFromStorage() {
     const key = "providers"
     try {
@@ -30,6 +38,12 @@ function getProvidersFromStorage() {
     }
 }
 
+/**
+ * Stores the given providers array into local storage
+ *
+ * @param providers
+ *  The providers to save into local storage under the "providers" key
+ */
 function setProvidersInStorage(providers: Provider[]) {
     const key = "providers"
     try {
@@ -85,7 +99,7 @@ export default function ProviderDirectory() {
         }
     }, [searchQuery, providers])
 
-    const addContact = (newProvider: Omit<Provider, "id">)=>{
+    const addProvider = (newProvider: Omit<Provider, "id">)=>{
         const addProvider = {
             id: Date.now().toString(),
             ...newProvider
@@ -128,7 +142,7 @@ export default function ProviderDirectory() {
             <ProviderForm
                 isOpen={isAddFormOpen}
                 onClose={()=> setIsAddFormOpen(false)}
-                onSubmit={addContact}
+                onSubmit={addProvider}
             />
         </main>
     )

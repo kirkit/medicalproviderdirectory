@@ -46,7 +46,7 @@ describe('ProviderTable', () => {
         expect(screen.getByText("Actions")).toBeInTheDocument()
     })
 
-    it("Renders the contacts correctly", () => {
+    it("Renders the providers correctly", () => {
         render(<ProviderTable providers={mockProviders} onDelete={mockDelete} onSort={mockSort}/>)
 
         expect(screen.getByText("Doe, Jane")).toBeInTheDocument()

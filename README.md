@@ -1,6 +1,6 @@
 # Medical Provider Directory Application
 ### React + TypeScript + Vite
-A web-based medical provider directory application built with Vite, Next.js, TypesScript, React, and Tailwind CSS
+A web-based medical provider directory application built with Vite, Next.js, TypeScript, React, and Tailwind CSS
 
 ## Features
 - View a list of providers with their details
@@ -50,5 +50,25 @@ Medical Provider Directory uses local storage to store and restore contacts betw
 
     npm run dev
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open dev host with your browser to access the directory, ex [http://localhost:3000](http://localhost:3000)
+
+## Testing Information
+### Testing Technical Stack
+- Jest
+- JestDom
+
+Tests can be found in /src/__test__
+Tests are written, but still had trouble getting them to run
+
+## Project Organization
+- __test__: test case dir
+- components: react components and program support components
+- components/ui: shadcn/ui components
+- data: testing and initalization data
+- lib: support and dependency libraries, in this case library for shadcn/ui
+- types: defined TypeScript types
+
+### External tools used
+Made use of vercel v0 to help give a starting point for the provider form, 
+and for the unit testing since I've never worked with Jest before
 

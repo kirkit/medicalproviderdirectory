@@ -21,7 +21,6 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 interface ProviderFormProps {
-    //Going to do a pop-up so need to know when it is open and what to do when it is closes
     isOpen: boolean
     onClose: () => void
     onSubmit: (provider: Omit<Provider, "id">) => void

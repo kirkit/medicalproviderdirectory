@@ -6,7 +6,6 @@ import {Button} from "@/components/ui/button.tsx";
 import {ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon, TrashIcon} from "lucide-react";
 import {useState} from "react";
 
-//Table will need to give the ability to sort and delete providers
 interface ProviderTableProps {
     providers: Provider[]
     onDelete: (id: string) => void
