@@ -14,7 +14,6 @@ Medical Provider Directory uses local storage to store and restore contacts betw
 
 ## Technical Stack
 - Vite
-- Next.js
 - TypeScript
 - Tailwind CSS
 - React Hook Form with Zod validation
