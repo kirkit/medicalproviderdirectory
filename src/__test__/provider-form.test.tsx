@@ -62,6 +62,46 @@ describe('ProviderForm', () => {
         expect(mockAddProvider).not.toHaveBeenCalled()
     })
 
+    it("validates whitespace error", async () => {
+        render(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
+
+        const FirstNameInput = screen.getByLabelText(/First Name */i)
+        const LastNameInput = screen.getByLabelText(/Last Name */i)
+        const emailInput = screen.getByLabelText(/Email */i)
+        const submitButton = screen.getByRole("button", {name: /Add Provider/i})
+
+        fireEvent.change(FirstNameInput, {target: {value: " "}})
+        fireEvent.change(LastNameInput, {target: {value: " "}})
+        fireEvent.change(emailInput, {target: {value: "test@test.com"}})
+        fireEvent.click(submitButton)
+
+        await waitFor(()=> {
+            expect(screen.getByText("cannot be empty or only be whitespaces")).toBeInTheDocument()
+        })
+
+        expect(mockAddProvider).not.toHaveBeenCalled()
+    })
+
+    it("validates max length correctly", async () => {
+        render(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
+
+        const FirstNameInput = screen.getByLabelText(/First Name */i)
+        const LastNameInput = screen.getByLabelText(/Last Name */i)
+        const emailInput = screen.getByLabelText(/Email */i)
+        const submitButton = screen.getByRole("button", {name: /Add Provider/i})
+
+        fireEvent.change(FirstNameInput, {target: {value: "testtesttesttesttesttesttesttest"}})
+        fireEvent.change(LastNameInput, {target: {value: "testtesttesttesttesttesttesttest"}})
+        fireEvent.change(emailInput, {target: {value: "testtesttesttesttesttesttesttesttest@testtestesttesttesttest.com"}})
+        fireEvent.click(submitButton)
+
+        await waitFor(()=> {
+            expect(screen.getByText("should not exceed")).toBeInTheDocument()
+        })
+
+        expect(mockAddProvider).not.toHaveBeenCalled()
+    })
+
     it("validates correct email foramt", async () => {
         render(<ProviderForm isOpen={true} onClose={mockClose} onSubmit={mockAddProvider}/>)
 
