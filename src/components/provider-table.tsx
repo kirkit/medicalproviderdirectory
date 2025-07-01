@@ -69,10 +69,10 @@ export function ProviderTable({providers, onDelete, onSort}: ProviderTableProps)
                         providers.map(provider =>
                             (
                                 <TableRow key={provider.id}>
-                                    <TableCell>{provider.providerName}</TableCell>
-                                    <TableCell>{provider.email}</TableCell>
-                                    <TableCell>{provider.specialty || "----"}</TableCell>
-                                    <TableCell>{provider.practiceName || "----"}</TableCell>
+                                    <TableCell className="text-left">{provider.providerName}</TableCell>
+                                    <TableCell className="text-left">{provider.email}</TableCell>
+                                    <TableCell className="text-left">{provider.specialty || "----"}</TableCell>
+                                    <TableCell className="text-left">{provider.practiceName || "----"}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-2">
                                             <Button

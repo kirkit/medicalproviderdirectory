@@ -12,9 +12,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 //Consulted vercel v0 for the best way to implement the form with validation, and zod was suggested
 
 const formSchema = z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    email: z.string().email("Invalid email address").min(1, "Email is required"),
+    firstName: z.string().trim().min(1, "First name is required, cannot be empty or only be whitespaces").max(26,"First name should not exceed 26 characters."),
+    lastName: z.string().trim().min(1, "Last name is required, cannot be empty or only be whitespaces").max(26,"Last name should not exceed 26 characters."),
+    email: z.string().email("Invalid email address").min(1, "Email is required").max(40,"Email should not exceed 40 characters."),
     practiceName: z.string().optional(),
     specialty: z.string().optional(),
 })
