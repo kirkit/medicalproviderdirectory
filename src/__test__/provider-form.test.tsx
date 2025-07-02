@@ -24,6 +24,7 @@ import jest from 'jest-mock';
 import {render, screen, fireEvent, waitFor} from "@testing-library/react";
 import {expect} from "@jest/globals";
 import '@testing-library/jest-dom/jest-globals'
+import {maxNameLength, maxEmailLength} from "@/values/definitions.ts";
 
 describe('ProviderForm', () => {
     const mockAddProvider = jest.fn()
@@ -96,7 +97,8 @@ describe('ProviderForm', () => {
         fireEvent.click(submitButton)
 
         await waitFor(()=> {
-            expect(screen.getByText("should not exceed")).toBeInTheDocument()
+            expect(screen.getByText(`should not exceed ${maxNameLength}`)).toBeInTheDocument()
+            expect(screen.getByText(`should not exceed ${maxEmailLength}`)).toBeInTheDocument()
         })
 
         expect(mockAddProvider).not.toHaveBeenCalled()
